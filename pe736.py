@@ -1,6 +1,6 @@
+# Project Euler 736
 from heapq import *
 
-# Project Euler 736
 def get_p(p, pt):
     x, y = pt
     for f in reversed(p):
