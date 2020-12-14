@@ -22,15 +22,13 @@ def A_star(start_state, heuristic_distance):
     """
     Parameters
     ----------
-    start: list of lists
-        Start state.
-    h: mapping from states to float
-        Heuristic cost function.
+    start: list
+    h: function: list -> float
 
     Returns
     ---------
     path: list
-        A list of states from start to goal.
+        The sequence of states from start to goal.
     """
     priority_queue = []
     current_distance = 0
