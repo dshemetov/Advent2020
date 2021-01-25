@@ -52,7 +52,7 @@ print(part2())
 # Appendix
 # Part b
 def get_sequences(nums):
-    """Brute force; times out."""
+    """Brute force; times out for long sequences."""
     current_choice = nums[0]
     if len(nums) == 1:
         return [[current_choice]]
@@ -61,3 +61,5 @@ def get_sequences(nums):
         return [[current_choice]]
     sequences = ([current_choice] + seq for i in choices for seq in get_sequences(nums[i:]))
     return sequences
+
+all([len(list(get_sequences(range(k+1)))) == integer_composition(k) for k in range(1, 12)])
