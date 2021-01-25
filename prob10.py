@@ -14,11 +14,20 @@ print(part1())
 
 
 # Part b
-def diff(list):
-    return [y-x for x,y in zip(list[:-1], list[1:])]
+from itertools import chain, islice, tee
+from functools import reduce
+from sympy import symbols, Poly
+
+def pairwise(iterable):
+    """s -> (s0,s1), (s1,s2), (s2, s3), ..."""
+    a, b = tee(iterable)
+    return zip(a, islice(b, 1, None))
+
+def diff(iterable):
+    """s -> s1-s0, s2-s1, s3-s2, ..."""
+    return (y-x for x, y in pairwise(iterable))
 
 def integer_composition(n):
-    from sympy import symbols, Poly
     x = symbols('x')
     f = 0
     for k in range(n+1):
@@ -28,12 +37,13 @@ def integer_composition(n):
 def part2():
     # Get the sorted adapter sequence
     nums = list(parse())
-    nums = [0] + sorted(nums) + [max(nums) + 3]
-    # Find the diffs, add a faux 3 at the beginning and then find the locations of the threes
-    diffs = [3] + diff(nums)
-    ixs = [i for i, x in enumerate(diffs) if x == 3]
+    nums = chain([0], sorted(nums), [max(nums) + 3])
+    # Find the diffs, add a 3 at the beginning and end to cap off edge 1-sequences
+    diffs = chain([3], diff(nums), [3])
+    # Find the end points of the 1-sequences
+    ixs = (i for i, x in enumerate(diffs) if x == 3)
+    # The length of the 1-sequence [a, b] is (b - a - 1)
     diffs = (integer_composition(x-1) for x in diff(ixs))
-    from functools import reduce
     return reduce(lambda x, y: x * y, diffs)
 
 print(part2())
