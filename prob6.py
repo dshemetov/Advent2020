@@ -12,6 +12,7 @@ def parse():
 
 sum((len(set(qs)) for qs in parse()))
 
+
 # Part b
 from string import ascii_letters
 def parse():

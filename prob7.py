@@ -35,6 +35,7 @@ def part1():
 
 print(part1())
 
+
 # Part b
 def get_bags(d, e):
     n = sum(bag[0] * get_bags(d, bag[1]) for bag in d[e]) if len(d[e]) > 0 else 0
